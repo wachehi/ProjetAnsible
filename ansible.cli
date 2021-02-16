@@ -1,4 +1,3 @@
-  
 # Lancement du premier playbook
 $ ansible-playbook -i hosts -u vagrant premier_playbook.yaml
 $ ansible-playbook -i hosts -u vagrant premier_playbook.yaml --limit srv01
@@ -11,7 +10,9 @@ $ ansible-playbook premier_playbook.yaml --list-tasks
 $ ansible-playbook premier_playbook.yaml --limit srv01
 
 # Installation du linter ansible dans le virtualenv
-pip install ansible-lint
+pip uninstall ansible-lint
+pip install ansible-lint==4.3.7
+$ ansible-lint bootstrap-playbook.yaml
 
 # Gestion de l'inventaire
 $ ansible-inventory -i hosts --list -y
@@ -31,3 +32,20 @@ https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.h
 
 # Module debug et verbosity
 $ ansible-playbook demo_loop-playbook.yaml -vv
+
+# Les facts
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
+Un task automatique au lancement d'un playbool : TASK [Gathering Facts] 
+Un module : setup
+$ ansible -m ansible.builtin.setup srv01
+$ ansible -m ansible.builtin.setup srv01 -a "filter=*user*"
+
+
+# Conditionnals :
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_error_handling.html
+
+# Mot de passe et vault
+1°) Définition du mot de passe directement en variable et hash à l'appel du module user
+2°) Génération d'un mot de passe hashé puis utilisation dans une variable
+$ ansible -i hosts srv01 -m debug -a "msg={{ 'deploy123' | password_hash('sha512', 'password') }}"
