@@ -1,2 +1,15 @@
+[linux:children]
+debian
+centos
+
+[debian]
 deby02    ansible_ssh_host=192.168.0.50
+
+[centos]
 centeos1  ansible_ssh_host=192.168.23.15
+
+[debian:vars]
+sudogrp=sudo
+
+[centos:vars]
+sudogrp=wheel

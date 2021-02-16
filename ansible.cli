@@ -1,2 +1,29 @@
+  
 # Lancement du premier playbook
-$ ansible-playbook -i hosts -u wachehi premier_playbook.yaml
+$ ansible-playbook -i hosts -u vagrant premier_playbook.yaml
+$ ansible-playbook -i hosts -u vagrant premier_playbook.yaml --limit srv01
+
+
+# Arguments supplémentaires au lancement du playbook
+$ ansible-playbook premier_playbook.yaml --check
+$ ansible-playbook premier_playbook.yaml --syntax-check
+$ ansible-playbook premier_playbook.yaml --list-tasks
+$ ansible-playbook premier_playbook.yaml --limit srv01
+
+# Installation du linter ansible dans le virtualenv
+pip install ansible-lint
+
+# Gestion de l'inventaire
+$ ansible-inventory -i hosts --list -y
+$ ansible-inventory -i hosts --graph
+
+# Lancement du second playbook bootstrap
+$ ansible-playbook bootstrap-playbook.yaml
+
+
+# Boucle - loops
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html
+
+
+# Variables spéciales :
+https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html
