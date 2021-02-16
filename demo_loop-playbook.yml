@@ -1,6 +1,6 @@
 ---
 - name: PLAY - demo loop
-  hosts: srv01
+  hosts: deby02
 
   vars:
     liste1:
