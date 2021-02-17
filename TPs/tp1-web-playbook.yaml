@@ -37,13 +37,18 @@
         owner: root
         group: root
         mode: 0644
+      notify:
+        - Reload apache2
 
     - name: Desactivation du virtualHost par defaut
       command: "a2dissite 000-default.conf"
-
+      args:
+        creates: /var/www/{{ mon_appli }}/deploy_ok
 
     - name: Activation du virtualHost pour appli
       command: "a2ensite {{ mon_appli }}.conf"
+      args:
+        creates: /var/www/{{ mon_appli }}/deploy_ok
 
     - name: Copie d'un fichier static dans le site
       ansible.builtin.copy :
@@ -54,15 +59,24 @@
         mode: '0644'
       when: appli_enable == 'present'
 
-    - name: Vérification du service apache2
-      ansible.builtin.service:
-        name: apache2
-        enabled: yes
-        state: restarted
-      when: appli_enable == 'present'
+    - name: Generation d'un fichier flag de fin de deploiement
+      ansible.builtin.copy:
+        content: ""
+        dest: /var/www/{{ mon_appli }}/deploy_ok
+        owner: root
+        group: root
+        mode: '0644'
 
     - name: Suppression du fichier index.html si appli non present
       ansible.builtin.file:
         path: /var/www/html/index.html
         state: absent
       when: appli_enable != 'present'
+
+  handlers:
+    - name: Reload apache2
+      ansible.builtin.service:
+        name: apache2
+        enabled: yes
+        state: reloaded
+      when: appli_enable == 'present'
