@@ -1,0 +1,8 @@
+---
+## GITHUB PERSO
+- src: 'git@gitlab.com:poec_cloud/formation_ansible/roles/apache.git'
+  scm:  git
+  version: '0.0.2'
+  name: 'apache_0.0.2'
+  
+  

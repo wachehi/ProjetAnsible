@@ -1,0 +1,16 @@
+---
+# - name: PLAY1 - deploiement prerequis
+#   hosts: linux
+#   become: true
+
+#   roles:
+#      - require_deploy_0.0.1
+
+- name: PLAY - deploiement prerequis
+  hosts: web
+  become: true
+
+  roles:
+     - role: apache_0.0.2
+       tags:
+         - 'role::apache'

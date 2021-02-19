@@ -1,0 +1,7 @@
+---
+- name: PLAY - deploiement prerequis
+  hosts: linux
+  become: true
+
+  roles:
+     - require_deploy_0.0.1

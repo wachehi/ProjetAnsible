@@ -71,3 +71,29 @@ $ ansible-vault edit vars-bootstrap.yaml
 ## TP1 lance du playbook :
 $ ansible-playbook TPs/tp1-web-playbook.yaml
 $ ansible-playbook TPs/tp1-web-playbook.yaml -e appli_enable=absent
+
+
+## Ansible Handlers : declenchement d'une action suite à un changement
+=> install => config => restart
+Combo : notify => handlers
+
+
+## Template : jinja2 => python
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_templating.html
+Fichier dynamique qui contient du texte et des variables, facts et code jinja
+
+
+## Systeme de delegation
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_delegation.html
+
+Ex : 
+1°) ajout du node manager ansible_connection=local dans le fichier d'inventaire
+2°) Configuration des droits sudo pour l'utilisateur ansible qui lance les commande
+Ex sudoers : (visudo)
+ansible ALL=(ALL) NOPASSWD:ALL
+3°) test mode adHoc :
+ansible -m ping -b manager
+
+## Module  community.general.ini_file
+$ ansible-galaxy collection install community.general
